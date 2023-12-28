@@ -1,3 +1,4 @@
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 
@@ -5,18 +6,21 @@ import plotly.express as px
 file_path = 'NIFTY.xlsx'
 data = pd.read_excel(file_path)
 
-# Print column names for user selection
-print("Available columns:")
-for col in data.columns:
-    print(col)
+# Streamlit app
+st.title("NIFTY Data Visualization App")
 
-# User input for date selection
-selected_date = input("Enter the date (in the format YYYY-MM-DD): ")
-selected_columns = input("Enter the column names (comma-separated) for the line chart: ").split(',')
+# Sidebar for user input
+st.sidebar.header("User Input")
+selected_date = st.sidebar.date_input("Select Date", data['Date'].min(), data['Date'].min(), data['Date'].max())
+selected_columns = st.sidebar.multiselect("Select Columns for Line Chart", data.columns[2:])
 
 # Filter data based on user input
 selected_data = data[data['Date'] == selected_date][['Date'] + selected_columns]
 
 # Line chart using Plotly Express
-fig = px.line(selected_data, x='Date', y=selected_columns, title=f'Line Chart for {selected_date}')
-fig.show()
+if not selected_data.empty:
+    st.plotly_chart(px.line(selected_data, x='Date', y=selected_columns, title=f'Line Chart for {selected_date}'))
+
+# Show selected data in a table
+st.write("Selected Data:")
+st.write(selected_data)
