@@ -16,10 +16,10 @@ st.title("NIFTY Data Visualization App")
 st.sidebar.header("User Input")
 
 # Option to select start date
-start_date = st.sidebar.date_input("Select Start Date", data['Date'].min())
+start_date = pd.to_datetime(st.sidebar.date_input("Select Start Date", data['Date'].min().date()))
 
 # Option to select end date
-end_date = st.sidebar.date_input("Select End Date", data['Date'].max(), data['Date'].min(), data['Date'].max())
+end_date = pd.to_datetime(st.sidebar.date_input("Select End Date", data['Date'].max().date(), data['Date'].min(), data['Date'].max().date()))
 
 # Specify columns for the line chart
 selected_columns = st.sidebar.multiselect(
