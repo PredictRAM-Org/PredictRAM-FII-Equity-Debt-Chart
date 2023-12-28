@@ -14,8 +14,8 @@ st.title("NIFTY Data Visualization App")
 
 # Sidebar for user input
 st.sidebar.header("User Input")
-start_date = st.sidebar.date_input("Select Start Date", data['Date'].min())
-end_date = st.sidebar.date_input("Select End Date", data['Date'].max(), data['Date'].min(), data['Date'].max())
+start_date = pd.to_datetime(st.sidebar.date_input("Select Start Date", data['Date'].min()))
+end_date = pd.to_datetime(st.sidebar.date_input("Select End Date", data['Date'].max(), data['Date'].min(), data['Date'].max()))
 selected_columns = st.sidebar.multiselect("Select Columns for Line Chart", data.columns[2:])
 
 # Filter data based on user input date range
@@ -28,4 +28,3 @@ if not selected_data.empty:
 # Show selected data in a table
 st.write("Selected Data:")
 st.write(selected_data)
-
