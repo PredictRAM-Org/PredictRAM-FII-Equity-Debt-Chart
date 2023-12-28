@@ -6,6 +6,9 @@ import plotly.express as px
 file_path = 'NIFTY.xlsx'
 data = pd.read_excel(file_path)
 
+# Convert 'Date' column to Pandas Timestamp
+data['Date'] = pd.to_datetime(data['Date'])
+
 # Streamlit app
 st.title("NIFTY Data Visualization App")
 
@@ -25,3 +28,4 @@ if not selected_data.empty:
 # Show selected data in a table
 st.write("Selected Data:")
 st.write(selected_data)
+
