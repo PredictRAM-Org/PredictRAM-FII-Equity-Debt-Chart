@@ -19,20 +19,21 @@ plot_data = merged_data[['Date', 'Net Investment_equity', 'Net Investment_debt']
 st.title("Net Investment Comparison")
 
 # Set default date value within the specified range
-default_date = max(merged_data['Date'].min(), min(merged_data['Date'].max(), pd.Timestamp.today().normalize()))
+min_date = merged_data['Date'].min().date()
+max_date = merged_data['Date'].max().date()
+today = pd.Timestamp.today().normalize().date()
 
-# Date selection
-selected_date = st.date_input("Select Date", min_value=merged_data['Date'].min(), max_value=merged_data['Date'].max(), value=default_date)
+default_date = st.date_input("Select Date", min_value=min_date, max_value=max_date, value=today)
 
 # Filter data based on selected date
-selected_data = plot_data[plot_data['Date'] == selected_date]
+selected_data = plot_data[plot_data['Date'] == pd.to_datetime(default_date)]
 
 # Plotting
 fig = px.bar(selected_data, x='Date', y=['Net Investment_equity', 'Net Investment_debt'],
              labels={'value': 'Net Investment', 'variable': 'Category'}, barmode='group')
 
 # Update layout for better visualization
-fig.update_layout(title=f"Net Investment Comparison on {selected_date}",
+fig.update_layout(title=f"Net Investment Comparison on {default_date}",
                   xaxis_title='Date',
                   yaxis_title='Net Investment',
                   legend_title='Category')
