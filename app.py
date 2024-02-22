@@ -23,7 +23,7 @@ min_date = merged_data['Date'].min().date()
 max_date = merged_data['Date'].max().date()
 today = pd.Timestamp.today().normalize().date()
 
-default_date = st.date_input("Select Date", min_value=min_date, max_value=max_date, value=today)
+default_date = st.date_picker("Select Date", min_value=min_date, max_value=max_date, value=today)
 
 # Filter data based on selected date
 selected_data = plot_data[plot_data['Date'] == pd.to_datetime(default_date)]
