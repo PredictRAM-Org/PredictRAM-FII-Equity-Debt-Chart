@@ -9,6 +9,9 @@ debt_data = pd.read_excel("FIIDebtData.xlsx")
 # Merge data on 'Date' column
 merged_data = pd.merge(equity_data, debt_data, on='Date', how='outer', suffixes=('_equity', '_debt'))
 
+# Convert 'Date' column to datetime
+merged_data['Date'] = pd.to_datetime(merged_data['Date'])
+
 # Filter columns for plotting
 plot_data = merged_data[['Date', 'Net Investment_equity', 'Net Investment_debt']]
 
