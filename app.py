@@ -23,8 +23,8 @@ nifty_data = yf.download('^NSEI', start=fii_plot_data['Date'].min(), end=fii_plo
 nifty_data['Date'] = nifty_data.index
 nifty_data['Nifty_Close_Percentage'] = nifty_data['Close'].pct_change() * 100
 
-# Merge Nifty data with FII data
-merged_data = pd.merge(fii_plot_data, nifty_data[['Date', 'Nifty_Close_Percentage']], on='Date', how='outer')
+# Merge Nifty data with FII data, check for duplicates
+merged_data = pd.merge(fii_plot_data, nifty_data[['Date', 'Nifty_Close_Percentage']], on='Date', how='outer', validate="one_to_one")
 
 # Streamlit app
 st.title("Net Investment and Nifty Comparison")
