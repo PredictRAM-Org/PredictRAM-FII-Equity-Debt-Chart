@@ -18,19 +18,12 @@ plot_data = merged_data[['Date', 'Net Investment_equity', 'Net Investment_debt']
 # Streamlit app
 st.title("Net Investment Comparison")
 
-# Date selection
-selected_date = st.date_picker("Select Date", min_value=merged_data['Date'].min(), max_value=merged_data['Date'].max(),
-                               value=pd.Timestamp.today().normalize())
-
-# Filter data based on selected date
-selected_data = plot_data[plot_data['Date'].dt.date == pd.to_datetime(selected_date).date()]
-
 # Plotting
-fig = px.bar(selected_data, x='Date', y=['Net Investment_equity', 'Net Investment_debt'],
+fig = px.bar(plot_data, x='Date', y=['Net Investment_equity', 'Net Investment_debt'],
              labels={'value': 'Net Investment', 'variable': 'Category'}, barmode='group')
 
 # Update layout for better visualization
-fig.update_layout(title=f"Net Investment Comparison on {selected_date}",
+fig.update_layout(title="Net Investment Comparison",
                   xaxis_title='Date',
                   yaxis_title='Net Investment',
                   legend_title='Category')
