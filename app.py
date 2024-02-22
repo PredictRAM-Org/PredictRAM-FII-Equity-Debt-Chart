@@ -18,8 +18,11 @@ plot_data = merged_data[['Date', 'Net Investment_equity', 'Net Investment_debt']
 # Streamlit app
 st.title("Net Investment Comparison")
 
+# Set default date value within the specified range
+default_date = max(merged_data['Date'].min(), min(merged_data['Date'].max(), pd.Timestamp.today().normalize()))
+
 # Date selection
-selected_date = st.date_input("Select Date", min_value=merged_data['Date'].min(), max_value=merged_data['Date'].max())
+selected_date = st.date_input("Select Date", min_value=merged_data['Date'].min(), max_value=merged_data['Date'].max(), value=default_date)
 
 # Filter data based on selected date
 selected_data = plot_data[plot_data['Date'] == selected_date]
